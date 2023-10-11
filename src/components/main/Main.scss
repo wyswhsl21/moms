@@ -1,0 +1,43 @@
+.Main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    div{
+
+        &.sideBar{
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            div{
+               &.leftBox{
+                  position:fixed;
+                  display: flex;
+                  width: 100px;
+                  height: 100vh;
+                 
+                  justify-content: center;
+                
+                  
+               }
+               &.centerBox {
+                  width: 95%;
+                  display: flex;
+                  justify-content: center;
+                  
+               }
+               &.rightBox{
+                  width: 100px;
+                  height: 100vh;
+                  border-left: 1px solid;
+                  display: flex;
+                  justify-content: center;
+    
+               }
+            }
+         }
+    }
+    
+}
