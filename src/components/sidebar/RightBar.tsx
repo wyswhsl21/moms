@@ -1,14 +1,15 @@
-import * as React from 'react';
-
+import React, { useState } from 'react';
+import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
 import PermPhoneMsgOutlinedIcon from '@mui/icons-material/PermPhoneMsgOutlined';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Box, Button, makeStyles } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, makeStyles } from '@mui/material';
 import ContentPasteGoOutlinedIcon from '@mui/icons-material/ContentPasteGoOutlined';
-
+import './RightBar.scss';
 const LeftBar = () => {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isSlide, setIsSlide] = useState(false);
+  console.log(isSlide);
   const rightSlideHandler = () => {
-    setIsMenuOpen(!isMenuOpen);
+    setIsSlide(!isSlide);
   };
 
   const buttonSX = {
@@ -43,8 +44,8 @@ const LeftBar = () => {
     { id: 0, name: '고객관리', src: PermPhoneMsgOutlinedIcon, path: '/usermanage' },
     { id: 1, name: '임직원관리', src: PermPhoneMsgOutlinedIcon, path: '/employeemanage' },
   ];
-  return (
-    <div className={`sideBox ${isMenuOpen ? 'open' : ''}`}>
+  return isSlide ? (
+    <div className={`sideBox ${isSlide ? 'open' : ''}`}>
       <div className="menuBox">
         {RightMenuList.map((item) => (
           <Box sx={boxSX} key={item.id}>
@@ -61,6 +62,21 @@ const LeftBar = () => {
 
       <Outlet />
     </div>
+  ) : (
+    <Tooltip
+      placement="left-end"
+      sx={{ height: '100%', display: 'flex', flexDirection: 'column-reverse' }}
+      title="열기"
+    >
+      <Box>
+        <IconButton>
+          <HighlightAltIcon
+            sx={{ width: '50px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
+            onClick={() => setIsSlide(!isSlide)}
+          />
+        </IconButton>
+      </Box>
+    </Tooltip>
   );
 };
 
