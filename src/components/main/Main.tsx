@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../header/ButtonAppBar';
 import Button from '../button/Button';
 import './Main.scss';
@@ -12,15 +12,34 @@ import LeftBar from '../sidebar/LeftBar';
 import ButtonAppBar from '../header/ButtonAppBar';
 import RightBar from '../sidebar/RightBar';
 import Center from '../center/Center';
+import TemporaryDrawer from '../sidebar/RightBar';
 const Main = () => {
+  const [isLogin, setIsLogin] = useState(false);
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    console.log(token);
+    token !== null ? setIsLogin(true) : setIsLogin(false);
+  }, [token]);
+  console.log(token);
   const nickname = '김재우';
-  return (
+  return isLogin ? (
     <div className="Main">
-      <ButtonAppBar />
+      <ButtonAppBar setIsLogin={setIsLogin} />
+
       <div className="sideBar">
         <LeftBar />
-        <Center />
-        <RightBar />
+        <Center isLogin={isLogin} />
+        <TemporaryDrawer />
+      </div>
+    </div>
+  ) : (
+    <div className="Main">
+      <ButtonAppBar setIsLogin={setIsLogin} />
+
+      <div className="sideBar">
+        <LeftBar />
+        <Center isLogin={isLogin} />
+        <TemporaryDrawer />
       </div>
     </div>
   );

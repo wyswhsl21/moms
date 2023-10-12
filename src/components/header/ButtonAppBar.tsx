@@ -2,25 +2,117 @@ import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import logoImg from '../../assets/logo/logo.png';
+import profileImg from '../../assets/profile/짱구.svg';
+import reloadImg from '../../assets/reload/reloadImg.png';
+import myinfoImg from '../../assets/info/infoImg.png';
+import logoutImg from '../../assets/logout/logoutImg.png';
+import './Header.scss';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CurrentTimer from '../timer/currentTimer';
+import ReplayIcon from '@mui/icons-material/Replay';
+import { Button } from '@mui/material';
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
+import LogoutIcon from '@mui/icons-material/Logout';
+export default function ButtonAppBar({ setIsLogin }: { setIsLogin: any }) {
+  const myInfoHandler = () => {
+    localStorage.setItem('token', 'DDDDDDDDD');
+    if (localStorage.getItem('token')) {
+      setIsLogin(true);
+    }
+  };
+  const logoutHandler = () => {
+    localStorage.clear();
+    if (localStorage.getItem('token') === null) {
+      setIsLogin(false);
+    }
+  };
 
-export default function ButtonAppBar() {
+  const reloadHandler = () => {
+    window.location.reload();
+  };
+  const name = '김재우';
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: '#fafafa',
+      },
+    },
+  });
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <ThemeProvider theme={theme}>
+      <Box
+        sx={{
+          flexGrow: 1,
+        }}
+      >
+        <AppBar
+          sx={{
+            zIndex: 1,
+            flexGrow: 1,
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '50px',
+          }}
+          className="AppBar"
+          position="static"
+        >
+          <div className="logoBox">
+            <img src={logoImg} />
+            <span>와우케어</span>
+          </div>
+          <div className="second">
+            <Box sx={{ fontSize: '16px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <ReplayIcon
+                onClick={reloadHandler}
+                sx={{ cursor: 'pointer', color: 'orange', transform: 'scaleX(-1) rotate(-40deg)' }}
+              />
+              <span>미출근~</span>
+              <Box
+                sx={{
+                  backgroundColor: 'green',
+                  color: 'white',
+                  borderRadius: '10px',
+                  fontSize: '14px',
+                  height: '25px',
+                  width: '80px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                근무준비중
+              </Box>
+              <Button sx={{ border: '1px solid gray', fontWeight: '700' }} size="small" variant="contained">
+                출근하기
+              </Button>
+            </Box>
+            <Box sx={{ fontSize: '16px', display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <Button sx={{ border: '1px solid gray', fontWeight: '700' }} size="small" variant="contained">
+                업체변경
+              </Button>
+              <Box sx={{ fontWeight: '700' }}>와우랩스</Box>
+            </Box>
+            <Box className="nicknameBox">
+              <img src={profileImg} />
+              <span>{name}님 반갑습니다</span>
+            </Box>
+            <Box className="timeBox">
+              <CurrentTimer />
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <PermIdentityIcon sx={{ cursor: 'pointer' }} onClick={myInfoHandler} />
+              <span>나의정보</span>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <LogoutIcon sx={{ cursor: 'pointer' }} onClick={logoutHandler} />
+              <span>로그아웃</span>
+            </Box>
+          </div>
+        </AppBar>
+      </Box>
+    </ThemeProvider>
   );
 }
