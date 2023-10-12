@@ -29,7 +29,7 @@ const Main = () => {
       <div className="sideBar">
         <LeftBar />
         <Center isLogin={isLogin} />
-        <TemporaryDrawer />
+        <RightBar />
       </div>
     </div>
   ) : (
@@ -39,7 +39,7 @@ const Main = () => {
       <div className="sideBar">
         <LeftBar />
         <Center isLogin={isLogin} />
-        <TemporaryDrawer />
+        <RightBar />
       </div>
     </div>
   );
