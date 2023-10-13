@@ -1,22 +1,18 @@
 .sideBox {
-  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 10px;
   background-color: #fafafa;
-  border-right: 1px solid #b1b1b8;
-  align-items: center;
-  width: 130px;
+  border-right: 1px solid #ddd;
+
+  padding: 6px;
   opacity: 0.8;
   overflow: hidden;
+  height: calc(100vh - 35px);
 
   div {
     &.menuBox {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      margin-bottom: 5px;
     }
     &.menuItem {
       cursor: pointer;
@@ -27,9 +23,7 @@
       gap: 10px;
       align-items: center;
       justify-content: center;
-      background-color: #f2f2f3;
-      border-radius: 10px;
-      border: 1px solid #bbb;
+
       &:hover {
         background-color: #e9e9eb;
         font-weight: 700;
@@ -41,8 +35,7 @@
     flex-direction: column;
     align-items: center;
     margin-bottom: 10px;
-    width: 80px;
-    height: 60px;
+
     border: 1px solid #bbb;
     border-radius: 10px;
     gap: 10px;

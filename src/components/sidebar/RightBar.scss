@@ -2,34 +2,23 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 10px;
   background-color: #fafafa;
-  border-right: 1px solid #b1b1b8;
-  align-items: center;
-  width: 130px;
-  opacity: 0.8;
-  overflow: hidden;
-  transition: right 0.3s ease-in-out;
+  border-right: 1px solid #ddd;
+  height: calc(100vh - 35px);
+  padding: 6px;
+  text-align: center;
+  height: calc(100vh - 35px);
 
   div {
     &.menuBox {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font: inherit;
+      vertical-align: baseline;
     }
     &.menuItem {
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      width: 80px;
-      height: 60px;
-      gap: 10px;
-      align-items: center;
-      justify-content: center;
-      background-color: #f2f2f3;
-      border-radius: 10px;
-      border: 1px solid #bbb;
+      margin-bottom: 5px;
       &:hover {
         background-color: #e9e9eb;
         font-weight: 700;
@@ -37,15 +26,8 @@
     }
   }
   button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-    width: 80px;
-    height: 60px;
-    border: 1px solid #bbb;
-    border-radius: 10px;
-    gap: 10px;
+    min-width: 68px;
+    border: 1px solid #ddd;
     cursor: pointer;
     &:hover {
       background-color: #e9e9eb;

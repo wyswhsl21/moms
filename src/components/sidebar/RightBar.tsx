@@ -5,7 +5,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import { Box, Button, IconButton, Tooltip, makeStyles } from '@mui/material';
 import ContentPasteGoOutlinedIcon from '@mui/icons-material/ContentPasteGoOutlined';
 import './RightBar.scss';
-const LeftBar = () => {
+const RightBar = () => {
   const [isSlide, setIsSlide] = useState(false);
   console.log(isSlide);
   const rightSlideHandler = () => {
@@ -48,10 +48,12 @@ const LeftBar = () => {
     <div className={`sideBox ${isSlide ? 'open' : ''}`}>
       <div className="menuBox">
         {RightMenuList.map((item) => (
-          <Box sx={boxSX} key={item.id}>
-            <item.src />
-            <span>{item.name}</span>
-          </Box>
+          <Tooltip key={item.id} placement="left-start" title={item?.name}>
+            <Box sx={boxSX} key={item.id}>
+              <item.src />
+              <span>{item.name}</span>
+            </Box>
+          </Tooltip>
         ))}
       </div>
 
@@ -80,4 +82,4 @@ const LeftBar = () => {
   );
 };
 
-export default LeftBar;
+export default RightBar;
