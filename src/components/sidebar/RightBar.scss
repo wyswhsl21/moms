@@ -1,0 +1,48 @@
+.sideBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #fafafa;
+  border-right: 1px solid #ddd;
+  height: calc(100vh - 35px);
+  padding: 6px;
+  text-align: center;
+  height: calc(100vh - 35px);
+
+  div {
+    &.menuBox {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font: inherit;
+      vertical-align: baseline;
+    }
+    &.menuItem {
+      margin-bottom: 5px;
+      &:hover {
+        background-color: #e9e9eb;
+        font-weight: 700;
+      }
+    }
+  }
+  button {
+    min-width: 68px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    &:hover {
+      background-color: #e9e9eb;
+      font-weight: 700;
+    }
+  }
+}
+.slideBox.open {
+  height: 100vh;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.close {
+  display: flex;
+  flex-direction: column-reverse;
+}

@@ -14,11 +14,14 @@ import ReplayIcon from '@mui/icons-material/Replay';
 import { Button } from '@mui/material';
 import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router-dom';
 export default function ButtonAppBar({ setIsLogin }: { setIsLogin: any }) {
+  const navigate = useNavigate();
   const myInfoHandler = () => {
     localStorage.setItem('token', 'DDDDDDDDD');
     if (localStorage.getItem('token')) {
       setIsLogin(true);
+      navigate('/');
     }
   };
   const logoutHandler = () => {
@@ -54,9 +57,8 @@ export default function ButtonAppBar({ setIsLogin }: { setIsLogin: any }) {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
-            height: '50px',
+            height: '35px',
           }}
-          className="AppBar"
           position="static"
         >
           <div className="logoBox">
@@ -85,18 +87,18 @@ export default function ButtonAppBar({ setIsLogin }: { setIsLogin: any }) {
               >
                 근무준비중
               </Box>
-              <Button sx={{ border: '1px solid gray', fontWeight: '700' }} size="small" variant="contained">
+              <Button className="workbtn" sx={{ border: '1px solid gray' }} variant="contained">
                 출근하기
               </Button>
             </Box>
-            <Box sx={{ fontSize: '16px', display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <Button sx={{ border: '1px solid gray', fontWeight: '700' }} size="small" variant="contained">
+            <Box sx={{ fontSize: '0.02857em', display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <Button sx={{ border: '1px solid gray' }} variant="contained">
                 업체변경
               </Button>
               <Box sx={{ fontWeight: '700' }}>와우랩스</Box>
             </Box>
             <Box className="nicknameBox">
-              <img src={profileImg} />
+              <img className="img" src={profileImg} />
               <span>{name}님 반갑습니다</span>
             </Box>
             <Box className="timeBox">

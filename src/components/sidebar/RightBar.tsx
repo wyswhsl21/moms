@@ -1,108 +1,85 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import DriveFileMoveIcon from '@mui/icons-material/DriveFileMove';
-import { Outlet } from 'react-router-dom';
-
-type Anchor = 'right';
-
-export default function TemporaryDrawer() {
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
-
-  const toggleDrawer = (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event.type === 'keydown' &&
-      ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
-    ) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
+import React, { useState } from 'react';
+import HighlightAltIcon from '@mui/icons-material/HighlightAlt';
+import PermPhoneMsgOutlinedIcon from '@mui/icons-material/PermPhoneMsgOutlined';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { Box, Button, IconButton, Tooltip, makeStyles } from '@mui/material';
+import ContentPasteGoOutlinedIcon from '@mui/icons-material/ContentPasteGoOutlined';
+import './RightBar.scss';
+const RightBar = () => {
+  const [isSlide, setIsSlide] = useState(false);
+  console.log(isSlide);
+  const rightSlideHandler = () => {
+    setIsSlide(!isSlide);
   };
 
-  const list = (anchor: Anchor) => (
-    <div className="sideBox">
-      <Box
-        sx={{ width: anchor === 'right' ? 'auto' : 250 }}
-        role="presentation"
-        onClick={toggleDrawer(anchor, false)}
-        onKeyDown={toggleDrawer(anchor, false)}
-      >
-        <Divider />
-        <List
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            height: '100vh',
-          }}
-        >
-          <div className="menuBox">
-            {['원격', '문자'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton
-                  sx={{
-                    width: '100px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-around',
-                    alignItems: 'center',
-                  }}
-                >
-                  <ListItemIcon sx={{ minWidth: '0px' }}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </div>
-          <div className="menuBox">
-            <ListItemButton
-              sx={{
-                width: '100px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-around',
-                alignItems: 'center',
-              }}
-            >
-              <ListItemIcon>
-                <DriveFileMoveIcon sx={{ minWidth: '0px' }} />
-              </ListItemIcon>
-              <ListItemText primary="접기" />
-            </ListItemButton>
-          </div>
-        </List>
-      </Box>
-    </div>
-  );
+  const buttonSX = {
+    backgroundColor: 'white',
+    color: 'black',
+    border: 'none',
+    '&:hover': {
+      border: 'none',
+      fontWeight: '700',
+    },
+  };
+  const boxSX = {
+    backgroudColor: '#f2f2f3',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    '&:hover': {
+      border: 'none',
+      cursor: 'pointer',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: '#e9e9eb',
+    },
+  };
 
-  return (
-    <div>
-      {(['right'] as const).map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>
-            <DriveFileMoveIcon />
-          </Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
-          </Drawer>
-        </React.Fragment>
-      ))}
+  const navigate = useNavigate();
+  const navigateHandler = (item: any) => {
+    navigate(item.path);
+  };
+  const RightMenuList = [
+    { id: 0, name: '고객관리', src: PermPhoneMsgOutlinedIcon, path: '/usermanage' },
+    { id: 1, name: '임직원관리', src: PermPhoneMsgOutlinedIcon, path: '/employeemanage' },
+  ];
+  return isSlide ? (
+    <div className={`sideBox ${isSlide ? 'open' : ''}`}>
+      <div className="menuBox">
+        {RightMenuList.map((item) => (
+          <Tooltip key={item.id} placement="left-start" title={item?.name}>
+            <Box sx={boxSX} key={item.id}>
+              <item.src />
+              <span>{item.name}</span>
+            </Box>
+          </Tooltip>
+        ))}
+      </div>
+
+      <Button onClick={rightSlideHandler} sx={buttonSX}>
+        <ContentPasteGoOutlinedIcon />
+        접기
+      </Button>
+
+      <Outlet />
     </div>
+  ) : (
+    <Tooltip
+      placement="left-end"
+      sx={{ height: '100%', display: 'flex', flexDirection: 'column-reverse' }}
+      title="열기"
+    >
+      <Box>
+        <IconButton>
+          <HighlightAltIcon
+            sx={{ width: '50px', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}
+            onClick={() => setIsSlide(!isSlide)}
+          />
+        </IconButton>
+      </Box>
+    </Tooltip>
   );
-}
+};
+
+export default RightBar;

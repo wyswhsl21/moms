@@ -1,0 +1,10 @@
+.tab {
+  width: 100px;
+}
+.tabList {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+
+  height: 40px;
+}

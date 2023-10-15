@@ -3,11 +3,12 @@ import { Outlet, useNavigate } from 'react-router-dom';
 import userImg from '../../assets/sideBar/usermanage.png';
 import employee from '../../assets/sideBar/employeemanage.png';
 import payment from '../../assets/sideBar/electronicpayment.png';
-import '../../components/sidebar/SideBar.scss';
+import '../sidebar/LeftBar.scss';
 import ManageAccountsOutlinedIcon from '@mui/icons-material/ManageAccountsOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import AddCardOutlinedIcon from '@mui/icons-material/AddCardOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+import { Tooltip } from '@mui/material';
 
 const LeftBar = () => {
   const navigate = useNavigate();
@@ -23,17 +24,20 @@ const LeftBar = () => {
     <div className="sideBox">
       <div className="menuBox">
         {MenuList.map((item) => (
-          <div onClick={() => navigateHandler(item)} key={item.id} className="menuItem">
-            <item.src />
-            <span>{item.name}</span>
-          </div>
+          <Tooltip key={item.id} placement="right" title={item?.name}>
+            <button onClick={() => navigateHandler(item)} key={item.id} className="menuItem">
+              <item.src />
+              <span>{item.name}</span>
+            </button>
+          </Tooltip>
         ))}
       </div>
-
-      <button className="settingBtn">
-        <SettingsOutlinedIcon />
-        <span>공통설정</span>
-      </button>
+      <Tooltip placement="right-start" title="공통설정">
+        <button className="settingBtn">
+          <SettingsOutlinedIcon />
+          <span>공통설정</span>
+        </button>
+      </Tooltip>
 
       <Outlet />
     </div>
