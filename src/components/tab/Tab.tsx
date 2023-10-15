@@ -3,7 +3,8 @@ import Tab from '@mui/material/Tab';
 import React, { useState } from 'react';
 import './Tab.scss';
 import { useRecoilState } from 'recoil';
-import { TabState, useTabState } from '../../recoil/OnMom';
+import { TabState, useCloseState, useTabState } from '../../recoil/OnMom';
+import { useNavigate } from 'react-router-dom';
 const MenuTab = () => {
   // Tab 타입 지정
   interface TabPanelProps {
@@ -11,7 +12,7 @@ const MenuTab = () => {
     index: number;
     value: number;
   }
-
+  const [isClose, setIsClose] = useRecoilState(useCloseState);
   function a11yProps(index: number) {
     return {
       id: `vertical-tab-${index}`,
@@ -20,22 +21,28 @@ const MenuTab = () => {
   }
   const [value, setValue] = useState(0);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log(event, newValue);
     setValue(newValue);
   };
+  const navigate = useNavigate();
   // Tab 추가 되는부분
 
   const [tabList, setTabList] = useState([
-    { id: 0, name: '임직원정보관리' },
-    { id: 1, name: '근태/휴가관리' },
-    { id: 2, name: '급여관리' },
-    { id: 3, name: '4대사회보험관리' },
-    { id: 4, name: '재증명발급관리대장' },
+    { id: 0, name: '임직원정보관리', src: '/employeemanage' },
+    { id: 1, name: '근태/휴가관리', src: '/workmanage' },
+    { id: 2, name: '급여관리', src: '/paymentmanage' },
+    { id: 3, name: '4대사회보험관리', src: '/insurance' },
+    { id: 4, name: '재증명발급관리대장', src: '/certificationmanage' },
   ]);
   const [addtabList, setAddTabList] = useRecoilState(useTabState);
   console.log(addtabList);
   const addTabHandler = (item: any) => {
-    setAddTabList([...addtabList, item]);
     console.log(item);
+    if (addtabList.includes(item)) {
+      return;
+    } else {
+      setAddTabList([...addtabList, item]);
+    }
   };
 
   return (

@@ -21,6 +21,7 @@ const EmployeeDataGrid = () => {
   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
   function createData(
+    checkbox: boolean,
     번호: number,
     프로필: any,
     임직원명: string,
@@ -33,10 +34,24 @@ const EmployeeDataGrid = () => {
     직책: string,
     직위: string,
   ) {
-    return { 번호, 프로필, 임직원명, 생년월일, 성별, 연락처, 와우인가입요청, 임직원접속여부, 부서, 직책, 직위 };
+    return {
+      checkbox,
+      번호,
+      프로필,
+      임직원명,
+      생년월일,
+      성별,
+      연락처,
+      와우인가입요청,
+      임직원접속여부,
+      부서,
+      직책,
+      직위,
+    };
   }
   const rows = [
     createData(
+      true,
       1,
       profile,
       ' 권미정',
@@ -50,71 +65,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
-      2,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      3,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      4,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      5,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      6,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
+      false,
       1,
       profile,
       ' 권미정',
@@ -128,6 +79,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      false,
       1,
       profile,
       ' 권미정',
@@ -141,6 +93,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      false,
       1,
       profile,
       ' 권미정',
@@ -154,6 +107,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      false,
       1,
       profile,
       ' 권미정',
@@ -167,6 +121,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      true,
       1,
       profile,
       ' 권미정',
@@ -180,6 +135,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      false,
       1,
       profile,
       ' 권미정',
@@ -193,6 +149,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      false,
       1,
       profile,
       ' 권미정',
@@ -206,6 +163,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      true,
       1,
       profile,
       ' 권미정',
@@ -219,6 +177,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      true,
       1,
       profile,
       ' 권미정',
@@ -232,6 +191,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      true,
       1,
       profile,
       ' 권미정',
@@ -245,6 +205,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      true,
       1,
       profile,
       ' 권미정',
@@ -258,6 +219,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
+      true,
       1,
       profile,
       ' 권미정',
@@ -271,32 +233,7 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
       true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
       1,
       profile,
       ' 권미정',
@@ -313,17 +250,20 @@ const EmployeeDataGrid = () => {
 
   //checkbox 핸들러
   const [checked, setChecked] = useState([true, false]);
+  //전체 체크 표시
   const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked([event.target.checked, event.target.checked]);
   };
 
+  // true , false - 표시
   const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked([event.target.checked, checked[1]]);
   };
-
+  // true true 체크표시
   const handleChange3 = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked([checked[0], event.target.checked]);
   };
+  console.log(checked);
 
   const tableBodyRef = useRef<HTMLTableRowElement>(null);
 
@@ -383,7 +323,12 @@ const EmployeeDataGrid = () => {
           {rows.map((row, idx) => (
             <TableRow key={row.프로필} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell align="left" component="th" scope="row">
-                <FormControlLabel label="" control={<Checkbox checked={checked[0]} onChange={handleChange2} />} />
+                <FormControlLabel
+                  label=""
+                  control={
+                    <Checkbox checked={row.checkbox === true ? checked[0] : checked[1]} onChange={handleChange2} />
+                  }
+                />
               </TableCell>
               <TableCell component="th" scope="row">
                 {row.번호}

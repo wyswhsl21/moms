@@ -87,29 +87,29 @@ export default function ButtonAppBar({ setIsLogin }: { setIsLogin: any }) {
               >
                 근무준비중
               </Box>
-              <Button className="workbtn" sx={{ border: '1px solid gray' }} variant="contained">
+              <Button sx={{ border: '1px solid gray' }} size="small" variant="contained">
                 출근하기
               </Button>
             </Box>
-            <Box sx={{ fontSize: '0.02857em', display: 'flex', alignItems: 'center', gap: '5px' }}>
-              <Button sx={{ border: '1px solid gray' }} variant="contained">
+            <Box ml={3} sx={{ fontSize: '0.02857em', display: 'flex', alignItems: 'center', gap: '5px' }}>
+              <Button sx={{ border: '1px solid gray' }} size="small" variant="contained">
                 업체변경
               </Button>
-              <Box sx={{ fontWeight: '700' }}>와우랩스</Box>
+              <Box sx={{ fontWeight: '700', fontSize: '16px' }}>와우랩스</Box>
             </Box>
-            <Box className="nicknameBox">
+            <Box ml={2} sx={{ display: 'flex', alignItems: 'center', fontWeight: '700' }} className="nicknameBox">
               <img className="img" src={profileImg} />
               <span>{name}님 반갑습니다</span>
             </Box>
-            <Box className="timeBox">
+            <Box ml={1} className="timeBox">
               <CurrentTimer />
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <PermIdentityIcon sx={{ cursor: 'pointer' }} onClick={myInfoHandler} />
+            <Box onClick={myInfoHandler} ml={1} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <PermIdentityIcon />
               <span>나의정보</span>
             </Box>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <LogoutIcon sx={{ cursor: 'pointer' }} onClick={logoutHandler} />
+            <Box onClick={logoutHandler} ml={1} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <LogoutIcon />
               <span>로그아웃</span>
             </Box>
           </div>

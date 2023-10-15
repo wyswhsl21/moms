@@ -4,7 +4,8 @@ import PermPhoneMsgOutlinedIcon from '@mui/icons-material/PermPhoneMsgOutlined';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Box, Button, IconButton, Tooltip, makeStyles } from '@mui/material';
 import ContentPasteGoOutlinedIcon from '@mui/icons-material/ContentPasteGoOutlined';
-import './RightBar.scss';
+import DevicesIcon from '@mui/icons-material/Devices';
+import './LeftBar.scss';
 const RightBar = () => {
   const [isSlide, setIsSlide] = useState(false);
   console.log(isSlide);
@@ -25,7 +26,10 @@ const RightBar = () => {
     backgroudColor: '#f2f2f3',
     display: 'flex',
     flexDirection: 'column',
+    gap: '5px',
+
     alignItems: 'center',
+
     '&:hover': {
       border: 'none',
       cursor: 'pointer',
@@ -41,15 +45,15 @@ const RightBar = () => {
     navigate(item.path);
   };
   const RightMenuList = [
-    { id: 0, name: '고객관리', src: PermPhoneMsgOutlinedIcon, path: '/usermanage' },
-    { id: 1, name: '임직원관리', src: PermPhoneMsgOutlinedIcon, path: '/employeemanage' },
+    { id: 0, name: '원격', src: DevicesIcon, path: '/usermanage' },
+    { id: 1, name: '문자', src: PermPhoneMsgOutlinedIcon, path: '/employeemanage' },
   ];
   return isSlide ? (
     <div className={`sideBox ${isSlide ? 'open' : ''}`}>
-      <div className="menuBox">
+      <div>
         {RightMenuList.map((item) => (
-          <Tooltip key={item.id} placement="left-start" title={item?.name}>
-            <Box sx={boxSX} key={item.id}>
+          <Tooltip key={item.id} placement="left" title={item?.name}>
+            <Box mt={1} sx={boxSX} key={item.id}>
               <item.src />
               <span>{item.name}</span>
             </Box>
@@ -57,10 +61,22 @@ const RightBar = () => {
         ))}
       </div>
 
-      <Button onClick={rightSlideHandler} sx={buttonSX}>
-        <ContentPasteGoOutlinedIcon />
+      <Box
+        className="folder"
+        mb={3}
+        onClick={rightSlideHandler}
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          borderTop: '1px solid #ddd',
+          fontSize: '12px',
+          width: '55px',
+        }}
+      >
+        <ContentPasteGoOutlinedIcon sx={{ marginTop: '10px' }} />
         접기
-      </Button>
+      </Box>
 
       <Outlet />
     </div>
