@@ -1,9 +1,11 @@
 .tabList {
   display: flex;
   flex-direction: column;
-  &.headertab {
-    display: flex;
-    flex-direction: row;
+  div {
+    &.headertab {
+      display: flex;
+      flex-direction: row;
+    }
   }
 }
 .delete {

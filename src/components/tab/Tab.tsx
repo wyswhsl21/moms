@@ -59,7 +59,7 @@ const MenuTab = () => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 0 }}>
+          <Box sx={{ p:0,width: '10px' }}>
             <Typography>{children}</Typography>
           </Box>
         )}

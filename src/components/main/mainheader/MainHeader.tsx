@@ -40,7 +40,7 @@ const MainHeader = () => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 3 }}>
+          <Box sx={{ p: 0}}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -80,18 +80,19 @@ const MainHeader = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: { xs: 500, sm: 2500 }, bgcolor: 'background.paper' }}>
+    <Box sx={{ maxWidth: { xs: 1000, sm: 2500 }, bgcolor: 'background.paper' }}>
       <div className="tabList">
         <div className="headertab">
           <Box
             onClick={closeTabHandler}
+           
             sx={{
               width: '110px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               cursor: 'pointer',
-              gap: '5px',
+
               border: '1px solid',
             }}
           >
