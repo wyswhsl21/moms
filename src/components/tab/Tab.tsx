@@ -1,7 +1,7 @@
 import { Box, Button, Tabs, Typography } from '@mui/material';
 import Tab from '@mui/material/Tab';
 import React, { useState } from 'react';
-import './Tab.scss';
+import '../../components/tab/Tab.scss';
 import { useRecoilState } from 'recoil';
 import { TabState, useCloseState, useTabState } from '../../recoil/OnMom';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,8 @@ const MenuTab = () => {
     value: number;
   }
   const [isClose, setIsClose] = useRecoilState(useCloseState);
+  console.log(isClose);
+
   function a11yProps(index: number) {
     return {
       id: `vertical-tab-${index}`,
@@ -44,21 +46,47 @@ const MenuTab = () => {
       setAddTabList([...addtabList, item]);
     }
   };
+  // 커스텀 탑 패널
+  function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
 
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`vertical-tabpanel-${index}`}
+        aria-labelledby={`vertical-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box sx={{ p: 0 }}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
   return (
-    <Box sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh' }}>
+    <Box
+      className={`tab ${isClose ? 'open' : 'close'} `}
+      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh' }}
+    >
       <Tabs
         orientation="vertical"
-        variant="scrollable"
         value={value}
         onChange={handleChange}
-        aria-label="Vertical tabs example"
         sx={{ borderRight: 1, borderColor: 'divider' }}
       >
         {tabList.map((item) => (
           <Tab onClick={() => addTabHandler(item)} key={item.id} label={item.name} {...a11yProps(item.id)} />
         ))}
       </Tabs>
+
+      <TabPanel value={value} index={0} />
+      <TabPanel value={value} index={1} />
+      <TabPanel value={value} index={2} />
+      <TabPanel value={value} index={3} />
+      <TabPanel value={value} index={4} />
     </Box>
   );
 };

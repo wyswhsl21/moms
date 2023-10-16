@@ -21,7 +21,7 @@ const LeftBar = () => {
     { id: 2, name: '전자결제', src: AddCardOutlinedIcon, path: '/payment' },
   ];
   return (
-    <div className="sideBox">
+    <div className="sideBox left">
       <div className="menuBox">
         {MenuList.map((item) => (
           <Tooltip key={item.id} placement="right" title={item?.name}>
@@ -32,8 +32,8 @@ const LeftBar = () => {
           </Tooltip>
         ))}
       </div>
-      <Tooltip placement="right-start" title="공통설정">
-        <button className="settingBtn">
+      <Tooltip placement="right" title="공통설정">
+        <button className="settingButton">
           <SettingsOutlinedIcon />
           <span>공통설정</span>
         </button>

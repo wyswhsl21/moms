@@ -1,15 +1,53 @@
-.sideBox {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background-color: #fafafa;
-  border: 1px solid #ddd;
+@keyframes slideInRightToLeft {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+@keyframes slideOutLeftToRight {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(40%);
+  }
+}
 
-  width: 80px;
-  padding: 6px;
-  opacity: 0.8;
-  overflow: hidden;
-  height: calc(100vh - 35px);
+.sideBox {
+  &.left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    width: 80px;
+    padding: 6px;
+    opacity: 0.8;
+    overflow: hidden;
+    height: calc(100vh - 35px);
+  }
+  &.open {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    width: 50px;
+    padding: 6px;
+    opacity: 0.8;
+    overflow: hidden;
+    height: calc(100vh - 35px);
+    animation: slideInRightToLeft 0.5s ease-in-out forwards;
+  }
+  &.close {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    animation: slideOutLeftToRight 0.5s ease-in-out forwards;
+  }
 
   div {
     &.menuBox {
@@ -34,8 +72,17 @@
       background-color: #e9e9eb;
       font-weight: 700;
     }
+    &.settingButton {
+      display: flex;
+      margin-bottom: 40px;
+    }
   }
 }
 .folder {
   display: flex;
+}
+
+.slideout {
+  margin-bottom: 40px;
+  animaion: slideOutLeftToRight 2s ease-in-out forwards;
 }

@@ -50,6 +50,7 @@ export default function ButtonAppBar({ setIsLogin }: { setIsLogin: any }) {
         }}
       >
         <AppBar
+          elevation={0}
           sx={{
             zIndex: 1,
             flexGrow: 1,
@@ -95,7 +96,9 @@ export default function ButtonAppBar({ setIsLogin }: { setIsLogin: any }) {
               <Button sx={{ border: '1px solid gray' }} size="small" variant="contained">
                 업체변경
               </Button>
-              <Box sx={{ fontWeight: '700', fontSize: '16px' }}>와우랩스</Box>
+              <Box ml={1} sx={{ fontWeight: '700', fontSize: '16px' }}>
+                와우랩스
+              </Box>
             </Box>
             <Box ml={2} sx={{ display: 'flex', alignItems: 'center', fontWeight: '700' }} className="nicknameBox">
               <img className="img" src={profileImg} />

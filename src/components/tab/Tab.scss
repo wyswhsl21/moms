@@ -1,5 +1,30 @@
 .tab {
   width: 100px;
+  &.open {
+    animation: slideIn 0.3s ease-in-out forwards;
+  }
+  &.close {
+    animation: slidOut 0.3s ease-in-out forwards;
+    z-index: 999;
+  }
+}
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+@keyframes slidOut {
+  0% {
+    opacity: 100%;
+    transform: translateX(0%);
+  }
+  100% {
+    opacity: 0%;
+    transform: translateX((-100%));
+  }
 }
 .tabList {
   display: flex;
@@ -7,4 +32,24 @@
   gap: 10px;
 
   height: 40px;
+}
+.tab-animation-enter {
+  opacity: 0;
+}
+
+.tab-animation-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.tab-animation-exit {
+  opacity: 1;
+}
+
+.tab-animation-exit-active {
+  opacity: 0;
+  animation-name: slidOut; /* 추가 */
+  animation-duration: 0.3s; /* 추가 */
+  animation-timing-function: ease-out; /* 추가 */
+  animation-fill-mode: forwards; /* 추가 */
 }

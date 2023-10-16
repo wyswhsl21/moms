@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Tab, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { TabState, useCloseState, useTabState } from '../../../recoil/OnMom';
@@ -8,49 +8,35 @@ import './MainHeader.scss';
 import { isHtmlElement } from 'react-router-dom/dist/dom';
 import { useNavigate } from 'react-router-dom';
 import TableRowsIcon from '@mui/icons-material/TableRows';
+import EmployeeDataGrid from '../../employeemanage/employee_grid/DataGrid';
+
 export interface TabValue {
   name: string;
 }
 const MainHeader = () => {
   const navigate = useNavigate();
+  //tab 에 관련된 recoil state
   const [tabMenu, setTabMenu] = useRecoilState(useTabState);
+  //tab toggle recoil state
   const [isClose, setIsClose] = useRecoilState(useCloseState);
   console.log(tabMenu, isClose);
+
+  //TabPanel Type
   interface TabPanelProps {
     children?: React.ReactNode;
     index: number;
     value: number;
   }
-  const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-  //  tab delete 핸들러
-  const tabMenuDeleteHandler = (props: TabState) => {
-    console.log(props);
-    const restTabMenu = tabMenu.filter((v: TabState) => v !== props);
-    setTabMenu(restTabMenu);
-  };
-  const naviHandler = (props: string) => {
-    navigate(props);
-  };
-  useEffect(() => {
-    new Set(tabMenu);
-  }, []);
-  const closeTabHandler = () => {
-    setIsClose(!isClose);
-  };
-
-  function TabPanel(props: TabPanelProps) {
+  function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
     return (
       <div
         role="tabpanel"
         hidden={value !== index}
-        id={`vertical-tabpanel-${index}`}
-        aria-labelledby={`vertical-tab-${index}`}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
         {...other}
       >
         {value === index && (
@@ -62,31 +48,78 @@ const MainHeader = () => {
     );
   }
 
-  return (
-    <Box sx={{ maxWidth: { xs: 1000, sm: 2000 }, bgcolor: 'background.paper' }}>
-      <div className="tabList">
-        <Box
-          onClick={closeTabHandler}
-          sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
-        >
-          <TableRowsIcon />
-          메뉴닫기
-        </Box>
+  function a11yProps(index: number) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
+  const [value, setValue] = useState(0);
 
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
-        >
-          {tabMenu?.map((item: TabState) => (
-            <Button onClick={() => naviHandler(item.src)} key={item.name}>
-              {item.name}
-              <CloseIcon color="action" onClick={() => tabMenuDeleteHandler(item)} />
-            </Button>
-          ))}
-        </Tabs>
+  // Scrollable tabs
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+  //  tab delete 핸들러
+  const tabMenuDeleteHandler = (props: TabState) => {
+    console.log(props);
+    const restTabMenu = tabMenu.filter((v: TabState) => v !== props);
+    setTabMenu(restTabMenu);
+  };
+  const naviHandler = (props: string) => {
+    // navigate(props);
+  };
+  //tabMenu 에 중복 된 값이 존재하면 중복 제거
+  useEffect(() => {
+    new Set([tabMenu]);
+  }, [tabMenu]);
+  // Tab toggle
+  const closeTabHandler = () => {
+    setIsClose(!isClose);
+  };
+
+  return (
+    <Box sx={{ maxWidth: { xs: 500, sm: 2500 }, bgcolor: 'background.paper' }}>
+      <div className="tabList">
+        <div className="headertab">
+          <Box
+            onClick={closeTabHandler}
+            sx={{
+              width: '110px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              cursor: 'pointer',
+              gap: '5px',
+              border: '1px solid',
+            }}
+          >
+            <TableRowsIcon />
+            {isClose ? '메뉴닫기' : '메뉴열기'}
+          </Box>
+
+          <Tabs
+            allowScrollButtonsMobile
+            value={value}
+            onChange={handleChange}
+            variant="scrollable"
+            scrollButtons
+            aria-label="scrollable auto tabs example"
+          >
+            {tabMenu?.map((item: TabState) => (
+              <div key={item.id} className="tabbox">
+                <Tab key={item.name} label={item.name} {...a11yProps(item.id)} />
+
+                <CloseIcon className="delete" color="action" onClick={() => tabMenuDeleteHandler(item)} />
+              </div>
+            ))}
+          </Tabs>
+        </div>
+
+        <CustomTabPanel value={value} index={0}>
+          <EmployeeDataGrid />
+        </CustomTabPanel>
       </div>
     </Box>
   );

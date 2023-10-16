@@ -21,7 +21,6 @@ const EmployeeDataGrid = () => {
   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
 
   function createData(
-    checkbox: boolean,
     번호: number,
     프로필: any,
     임직원명: string,
@@ -35,7 +34,6 @@ const EmployeeDataGrid = () => {
     직위: string,
   ) {
     return {
-      checkbox,
       번호,
       프로필,
       임직원명,
@@ -51,7 +49,6 @@ const EmployeeDataGrid = () => {
   }
   const rows = [
     createData(
-      true,
       1,
       profile,
       ' 권미정',
@@ -65,7 +62,6 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
-      false,
       1,
       profile,
       ' 권미정',
@@ -79,7 +75,6 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
-      false,
       1,
       profile,
       ' 권미정',
@@ -93,7 +88,6 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
-      false,
       1,
       profile,
       ' 권미정',
@@ -107,7 +101,6 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
-      false,
       1,
       profile,
       ' 권미정',
@@ -121,7 +114,6 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
-      true,
       1,
       profile,
       ' 권미정',
@@ -135,105 +127,6 @@ const EmployeeDataGrid = () => {
       '사원님',
     ),
     createData(
-      false,
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      false,
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      true,
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      true,
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      true,
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      true,
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      true,
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      true,
       1,
       profile,
       ' 권미정',
@@ -249,59 +142,49 @@ const EmployeeDataGrid = () => {
   ];
 
   //checkbox 핸들러
-  const [checked, setChecked] = useState([true, false]);
-  //전체 체크 표시
-  const handleChange1 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked([event.target.checked, event.target.checked]);
+  const [checkedAll, setCheckedAll] = useState(false);
+  const [checkedItems, setCheckedItems] = useState(Array(rows.length).fill(false));
+  //전체 체크박스 핸들러
+  const handleCheckAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setCheckedAll(checked);
+    setCheckedItems(Array(rows.length).fill(checked));
+  };
+  //개별 체크 박스 핸들러
+  const handleCheckItemChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const checked = event.target.checked;
+    setCheckedItems((prev) => prev.map((item, i) => (i === index ? checked : item)));
   };
 
-  // true , false - 표시
-  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked([event.target.checked, checked[1]]);
-  };
-  // true true 체크표시
-  const handleChange3 = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked([checked[0], event.target.checked]);
-  };
-  console.log(checked);
+  useEffect(() => {
+    //checkedItems 가 모두 true 라면 전체 체크 표시 활성화 아니라면 indetermine 상태로 바꿈.
+    if (checkedItems.every((item) => item)) {
+      setCheckedAll(true);
+    } else {
+      setCheckedAll(false);
+    }
+  }, [checkedItems]);
+  //전체 체크 표시
 
   const tableBodyRef = useRef<HTMLTableRowElement>(null);
 
-  //테이블 위치 스크롤 위치 고정 핸들러
-  const fixScrollHandler = () => {
-    if (tableBodyRef.current) {
-      const scrollTop = tableBodyRef.current.scrollTop;
-      if (scrollTop < 140) {
-        tableBodyRef.current.scrollTop = 140;
-      }
-    }
-  };
-  useEffect(() => {
-    //초기에 스크롤 위치 계산해서 잡아준다음 더이상 못올라가게끔 로직 수정
-
-    if (tableBodyRef.current) {
-      tableBodyRef.current.addEventListener('scroll', fixScrollHandler);
-    }
-
-    return () => {
-      if (tableBodyRef.current) {
-        tableBodyRef.current.removeEventListener('scroll', fixScrollHandler);
-      }
-    };
-  }, []);
   return (
     <TableContainer ref={tableBodyRef} className="grid" component={Paper}>
       <Table stickyHeader={true} sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow>
-            <TableCell padding="checkbox" align="left">
+          <TableRow hover>
+            <TableCell padding="checkbox" align="center">
+              {/* 전체 체크 해제 체크박스 */}
               <FormControlLabel
                 label=""
                 control={
                   <Checkbox
-                    checked={checked[0] && checked[1]}
-                    indeterminate={checked[0] !== checked[1]}
-                    onChange={handleChange1}
+                    // 체크 표시
+                    checked={checkedAll}
+                    // 모두 체크 되지 않았을때 checkedItems.some 하나라도 true 가 있으면 true 반환
+                    indeterminate={!checkedAll && checkedItems.some((item) => item)}
+                    // 이건 모두 체크
+                    onChange={handleCheckAllChange}
                   />
                 }
               />
@@ -316,18 +199,17 @@ const EmployeeDataGrid = () => {
             <TableCell align="left">임직원 접속여부</TableCell>
             <TableCell align="left">부서</TableCell>
             <TableCell align="center">직책</TableCell>
-            <TableCell align="left">직위</TableCell>
+            <TableCell align="center">직위</TableCell>
           </TableRow>
         </TableHead>
         <TableBody className="scroll">
           {rows.map((row, idx) => (
             <TableRow key={row.프로필} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell align="left" component="th" scope="row">
+                {/* 개별 체크박스 */}
                 <FormControlLabel
                   label=""
-                  control={
-                    <Checkbox checked={row.checkbox === true ? checked[0] : checked[1]} onChange={handleChange2} />
-                  }
+                  control={<Checkbox checked={checkedItems[idx]} onChange={handleCheckItemChange(idx)} />}
                 />
               </TableCell>
               <TableCell component="th" scope="row">
@@ -339,7 +221,7 @@ const EmployeeDataGrid = () => {
               <TableCell align="left">{row.임직원명}</TableCell>
               <TableCell align="left">{row.생년월일}</TableCell>
               <TableCell align="left">{row.성별}</TableCell>
-              <TableCell align="left">{row.연락처}</TableCell>
+              <TableCell align="center">{row.연락처}</TableCell>
               <TableCell align="left">
                 {row.와우인가입요청 ? (
                   <Box
@@ -370,8 +252,8 @@ const EmployeeDataGrid = () => {
                 )}
               </TableCell>
               <TableCell align="left">{row.부서}</TableCell>
-              <TableCell align="left">{row.직책}</TableCell>
-              <TableCell align="left">{row.직위}</TableCell>
+              <TableCell align="center">{row.직책}</TableCell>
+              <TableCell align="center">{row.직위}</TableCell>
             </TableRow>
           ))}
         </TableBody>
