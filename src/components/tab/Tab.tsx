@@ -5,6 +5,7 @@ import '../../components/tab/Tab.scss';
 import { useRecoilState } from 'recoil';
 import { TabState, useCloseState, useTabState } from '../../recoil/OnMom';
 import { useNavigate } from 'react-router-dom';
+import { DataGrid } from '@mui/x-data-grid';
 const MenuTab = () => {
   // Tab 타입 지정
   interface TabPanelProps {
@@ -59,7 +60,7 @@ const MenuTab = () => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p:0,width: '10px' }}>
+          <Box sx={{ p: 0 }}>
             <Typography>{children}</Typography>
           </Box>
         )}
@@ -69,7 +70,14 @@ const MenuTab = () => {
   return (
     <Box
       className={`tab ${isClose ? 'open' : 'close'} `}
-      sx={{ flexGrow: 1, bgcolor: 'background.paper', display: 'flex', height: '100vh' }}
+      sx={{
+        flexGrow: 0,
+        bgcolor: 'background.paper',
+        display: 'flex',
+        height: '100vh',
+        border: '1px solid #ddd',
+        width: '150px',
+      }}
     >
       <Tabs
         orientation="vertical"
@@ -81,12 +89,6 @@ const MenuTab = () => {
           <Tab onClick={() => addTabHandler(item)} key={item.id} label={item.name} {...a11yProps(item.id)} />
         ))}
       </Tabs>
-
-      <TabPanel value={value} index={0} />
-      <TabPanel value={value} index={1} />
-      <TabPanel value={value} index={2} />
-      <TabPanel value={value} index={3} />
-      <TabPanel value={value} index={4} />
     </Box>
   );
 };

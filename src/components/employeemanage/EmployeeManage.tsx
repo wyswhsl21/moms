@@ -22,8 +22,7 @@ const EmployeeManage = () => {
         <LeftBar />
         <div className="main">
           {/* Tab이 없어져야 메인 헤더부분이 왼쪽으로 붙는데, 여기서 애니메이션 효과를 주면서 없애는건 안되나 .. ? */}
-          {isClose ? <Tab /> : ''}
-
+          {isClose && <Tab />}
           <div className="grid">
             <MainHeader />
             {/* <EmployeeDataGrid /> */}

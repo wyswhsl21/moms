@@ -13,7 +13,11 @@ import '../../components/sidebar/LeftBar.scss';
 const LeftBar = () => {
   const navigate = useNavigate();
   const navigateHandler = (item: any) => {
-    navigate(item.path);
+    if (item.path === '/usermanage') {
+      window.open(item.path);
+    } else {
+      navigate(item.path);
+    }
   };
   const MenuList = [
     { id: 0, name: '고객관리', src: ManageAccountsOutlinedIcon, path: '/usermanage' },

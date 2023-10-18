@@ -16,10 +16,13 @@ import {
 } from '@mui/material';
 import profile from '../../../assets/profile/짱구.svg';
 import './DataGrid.scss';
+import { useRecoilState } from 'recoil';
+import { useUserState } from '../../../recoil/OnMom';
+import { serviceUser } from '../../../constants/constans';
 const EmployeeDataGrid = () => {
   const [isLabelCheck, setIsLabelCheck] = useState(true);
   const label = { inputProps: { 'aria-label': 'Size switch demo' } };
-
+  const [user, setUser] = useRecoilState(useUserState);
   function createData(
     번호: number,
     프로필: any,
@@ -47,108 +50,16 @@ const EmployeeDataGrid = () => {
       직위,
     };
   }
-  const rows = [
-    createData(
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-    createData(
-      1,
-      profile,
-      ' 권미정',
-      '1990-10-29',
-      '여자',
-      '010-5096-4206',
-      true,
-      true,
-      '미배정',
-      '요양보호사',
-      '사원님',
-    ),
-  ];
 
   //checkbox 핸들러
   const [checkedAll, setCheckedAll] = useState(false);
-  const [checkedItems, setCheckedItems] = useState(Array(rows.length).fill(false));
+  const [checkedItems, setCheckedItems] = useState(Array(serviceUser.length).fill(false));
+  console.log(checkedItems);
   //전체 체크박스 핸들러
   const handleCheckAllChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
     setCheckedAll(checked);
-    setCheckedItems(Array(rows.length).fill(checked));
+    setCheckedItems(Array(serviceUser.length).fill(checked));
   };
   //개별 체크 박스 핸들러
   const handleCheckItemChange = (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,10 +81,10 @@ const EmployeeDataGrid = () => {
 
   return (
     <TableContainer ref={tableBodyRef} className="grid" component={Paper}>
-      <Table stickyHeader={true} sx={{ minWidth: 650 }} aria-label="simple table">
+      <Table stickyHeader={true} sx={{ minWidth: 1000 }} aria-label="simple table">
         <TableHead>
-          <TableRow hover>
-            <TableCell padding="checkbox" align="center">
+          <TableRow hover={true}>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} padding="checkbox" align="center">
               {/* 전체 체크 해제 체크박스 */}
               <FormControlLabel
                 label=""
@@ -189,44 +100,84 @@ const EmployeeDataGrid = () => {
                 }
               />
             </TableCell>
-            <TableCell align="left">번호</TableCell>
-            <TableCell align="left">프로필</TableCell>
-            <TableCell align="left">임직원명</TableCell>
-            <TableCell align="left">생년월일</TableCell>
-            <TableCell align="left">성별</TableCell>
-            <TableCell align="center">연락처</TableCell>
-            <TableCell align="left">와우인 가입요청</TableCell>
-            <TableCell align="left">임직원 접속여부</TableCell>
-            <TableCell align="left">부서</TableCell>
-            <TableCell align="center">직책</TableCell>
-            <TableCell align="center">직위</TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              번호
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              프로필
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              임직원명
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              생년월일
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              성별
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              연락처
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              와우인 가입요청
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              임직원 접속여부
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              부서
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              직책
+            </TableCell>
+            <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+              직위
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody className="scroll">
-          {rows.map((row, idx) => (
-            <TableRow key={row.프로필} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell align="left" component="th" scope="row">
+          {user.map((row, idx) => (
+            <TableRow key={row.프로필} sx={{ '&:last-child td, &:last-child th': { border: '' } }}>
+              <TableCell
+                sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }}
+                align="center"
+                component="th"
+                scope="row"
+              >
                 {/* 개별 체크박스 */}
                 <FormControlLabel
                   label=""
                   control={<Checkbox checked={checkedItems[idx]} onChange={handleCheckItemChange(idx)} />}
                 />
               </TableCell>
-              <TableCell component="th" scope="row">
+              <TableCell
+                align="center"
+                sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }}
+                component="th"
+                scope="row"
+              >
                 {row.번호}
               </TableCell>
-              <TableCell align="left">
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
                 <img style={{ width: '30px' }} src={row.프로필} />
               </TableCell>
-              <TableCell align="left">{row.임직원명}</TableCell>
-              <TableCell align="left">{row.생년월일}</TableCell>
-              <TableCell align="left">{row.성별}</TableCell>
-              <TableCell align="center">{row.연락처}</TableCell>
-              <TableCell align="left">
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+                {row.임직원명}
+              </TableCell>
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+                {row.생년월일}
+              </TableCell>
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+                {row.성별}
+              </TableCell>
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+                {row.연락처}
+              </TableCell>
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
                 {row.와우인가입요청 ? (
                   <Box
                     sx={{
-                      ml: 3,
+                      ml: 7,
                       color: '#fff',
                       backgroundColor: '#2ecc71',
                       width: '60px',
@@ -244,16 +195,22 @@ const EmployeeDataGrid = () => {
                   <Box>등록요청</Box>
                 )}
               </TableCell>
-              <TableCell align="left">
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
                 {row.임직원접속여부 ? (
-                  <Switch sx={{ ml: 3 }} checked={true} {...label} defaultChecked size="small" />
+                  <Switch sx={{ ml: 1 }} checked={true} {...label} defaultChecked size="small" />
                 ) : (
-                  <Switch sx={{ ml: 3 }} checked={false} {...label} defaultChecked />
+                  <Switch sx={{ ml: 1 }} checked={false} {...label} defaultChecked />
                 )}
               </TableCell>
-              <TableCell align="left">{row.부서}</TableCell>
-              <TableCell align="center">{row.직책}</TableCell>
-              <TableCell align="center">{row.직위}</TableCell>
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+                {row.부서}
+              </TableCell>
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+                {row.직책}
+              </TableCell>
+              <TableCell sx={{ borderRight: '1px solid rgba(224, 224, 224, 1)' }} align="center">
+                {row.직위}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

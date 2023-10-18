@@ -107,11 +107,33 @@ export default function ButtonAppBar({ setIsLogin }: { setIsLogin: any }) {
             <Box ml={1} className="timeBox">
               <CurrentTimer />
             </Box>
-            <Box onClick={myInfoHandler} ml={1} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <Box
+              onClick={myInfoHandler}
+              ml={1}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                cursor: 'pointer',
+                fontWeight: '400',
+                fontSize: '0.875rem',
+                color: 'rgb(107, 107, 107)',
+              }}
+            >
               <PermIdentityIcon />
               <span>나의정보</span>
             </Box>
-            <Box onClick={logoutHandler} ml={1} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <Box
+              onClick={logoutHandler}
+              ml={1}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                cursor: 'pointer',
+                fontWeight: '400',
+                fontSize: '0.875rem',
+                color: 'rgb(107, 107, 107)',
+              }}
+            >
               <LogoutIcon />
               <span>로그아웃</span>
             </Box>

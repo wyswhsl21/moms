@@ -1,4 +1,4 @@
-import { Box, Button, Tab, Typography } from '@mui/material';
+import { Box, Button, IconButton, Tab, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { TabState, useCloseState, useTabState } from '../../../recoil/OnMom';
@@ -9,10 +9,14 @@ import { isHtmlElement } from 'react-router-dom/dist/dom';
 import { useNavigate } from 'react-router-dom';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import EmployeeDataGrid from '../../employeemanage/employee_grid/DataGrid';
+import MySpan from '../../mySpan/MySpan';
+import Mysearch from '../../search/Mysearch';
+import WowButton from '../../button/Button';
 
 export interface TabValue {
   name: string;
 }
+
 const MainHeader = () => {
   const navigate = useNavigate();
   //tab 에 관련된 recoil state
@@ -20,7 +24,9 @@ const MainHeader = () => {
   //tab toggle recoil state
   const [isClose, setIsClose] = useRecoilState(useCloseState);
   console.log(tabMenu, isClose);
-
+  const TabChannelValue = 0;
+  const [tabPanelChannel, setTabPanelChannel] = useState(TabChannelValue);
+  console.log(tabPanelChannel);
   //TabPanel Type
   interface TabPanelProps {
     children?: React.ReactNode;
@@ -40,8 +46,12 @@ const MainHeader = () => {
         {...other}
       >
         {value === index && (
-          <Box sx={{ p: 0}}>
-            <Typography>{children}</Typography>
+          <Box>
+            <Typography
+              sx={{ padding: '20px 30px', display: 'flex', flexDirection: 'column', gap: '20px', width: '98%' }}
+            >
+              {children}
+            </Typography>
           </Box>
         )}
       </div>
@@ -54,11 +64,13 @@ const MainHeader = () => {
       'aria-controls': `simple-tabpanel-${index}`,
     };
   }
+
   const [value, setValue] = useState(0);
 
   // Scrollable tabs
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    console.log(newValue);
     setValue(newValue);
   };
   //  tab delete 핸들러
@@ -67,6 +79,12 @@ const MainHeader = () => {
     const restTabMenu = tabMenu.filter((v: TabState) => v !== props);
     setTabMenu(restTabMenu);
   };
+  const TabChannelHandler = (item: TabState) => {
+    setTabPanelChannel(item.id);
+    setIsTabValue(item.name);
+  };
+
+  const [isTabValue, setIsTabValue] = useState('임직원정보관리');
   const naviHandler = (props: string) => {
     // navigate(props);
   };
@@ -85,7 +103,6 @@ const MainHeader = () => {
         <div className="headertab">
           <Box
             onClick={closeTabHandler}
-           
             sx={{
               width: '110px',
               display: 'flex',
@@ -93,14 +110,15 @@ const MainHeader = () => {
               justifyContent: 'center',
               cursor: 'pointer',
 
-              border: '1px solid',
+              border: '1px solid #ddd',
             }}
           >
             <TableRowsIcon />
             {isClose ? '메뉴닫기' : '메뉴열기'}
           </Box>
-
+          {/* How ?  recoil 로 상태값을 가져와서 ...a11yProps(item.id) 값을 넘겨주면 0,1,2,3,4 될거고 Tab도 눌려야 하는데 눌리지가 않는다 ? */}
           <Tabs
+            sx={{ border: '1px solid #ddd', width: '100%' }}
             allowScrollButtonsMobile
             value={value}
             onChange={handleChange}
@@ -109,18 +127,69 @@ const MainHeader = () => {
             aria-label="scrollable auto tabs example"
           >
             {tabMenu?.map((item: TabState) => (
-              <div key={item.id} className="tabbox">
-                <Tab key={item.name} label={item.name} {...a11yProps(item.id)} />
-
-                <CloseIcon className="delete" color="action" onClick={() => tabMenuDeleteHandler(item)} />
-              </div>
+              <Box key={item.id} className="tabbox">
+                <Tab
+                  onClick={() => TabChannelHandler(item)}
+                  key={item.name}
+                  label={item.name}
+                  {...a11yProps(Number(item.id))}
+                />
+                <IconButton onClick={() => tabMenuDeleteHandler(item)}>
+                  <CloseIcon className="delete" color="action" />
+                </IconButton>
+              </Box>
             ))}
           </Tabs>
         </div>
+        {/* 내가 하고자 하는것 allprops 에 item.id 값 넘겨주기 때문에 CustomTabPanel index 값도 똑같이 넘겨 렌더링을 일치 시키고 싶은데, TabPanelChannel 이라는 값을 만들어 사용했는데
+        value !== index 일때 hidden 이 되야하는데 이게 안먹힘.. 그리고 Tab 에 삭제기능을 넣고 싶어 Box 로 감싸고 버튼을 만들었는데 TabPanel 이 먹히지 않음.
+        */}
+        <Box>
+          <CustomTabPanel value={value} index={tabPanelChannel}>
+            <Box borderBottom={1} sx={{ display: 'flex', justifyContent: 'space-between', borderColor: '#ddd' }}>
+              <MySpan title={isTabValue} />
+              <Mysearch />
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ display: 'flex', gap: '5px' }}>
+                <WowButton>임직원추가</WowButton>
+                <WowButton>임직원수정</WowButton>
+                <WowButton color="danger">임직원삭제</WowButton>
+              </div>
+              <div style={{ display: 'flex', gap: '5px' }}>
+                <WowButton>임직원 업로드 양식 다운로드</WowButton>
+                <WowButton>임직원 일괄추가</WowButton>
+                <WowButton sx={{ backgroudColor: 'rgb(33, 150, 243)' }}>와우인(人)가입요청 일괄발송</WowButton>
+              </div>
+            </Box>
 
-        <CustomTabPanel value={value} index={0}>
-          <EmployeeDataGrid />
-        </CustomTabPanel>
+            <EmployeeDataGrid />
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={tabPanelChannel}>
+            <Box borderBottom={1} sx={{ display: 'flex', justifyContent: 'space-between', borderColor: '#ddd' }}>
+              <MySpan title={isTabValue} />
+              <Mysearch />
+            </Box>
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={tabPanelChannel}>
+            <Box borderBottom={1} sx={{ display: 'flex', justifyContent: 'space-between', borderColor: '#ddd' }}>
+              <MySpan title={isTabValue} />
+              <Mysearch />
+            </Box>
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={tabPanelChannel}>
+            <Box borderBottom={1} sx={{ display: 'flex', justifyContent: 'space-between', borderColor: '#ddd' }}>
+              <MySpan title={isTabValue} />
+              <Mysearch />
+            </Box>
+          </CustomTabPanel>
+          <CustomTabPanel value={value} index={tabPanelChannel}>
+            <Box borderBottom={1} sx={{ display: 'flex', justifyContent: 'space-between', borderColor: '#ddd' }}>
+              <MySpan title={isTabValue} />
+              <Mysearch />
+            </Box>
+          </CustomTabPanel>
+        </Box>
       </div>
     </Box>
   );

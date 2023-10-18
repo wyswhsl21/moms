@@ -10,7 +10,20 @@ import LockIcon from '@mui/icons-material/Lock';
 import { yellow } from '@mui/material/colors';
 import { userData } from '../../constants/constans';
 import profileImg from '../../assets/profile/짱구.svg';
+import Sheet from '@mui/joy/Sheet';
+import { styled } from '@mui/joy/styles';
+
 const Center = ({ isLogin }: { isLogin: boolean }) => {
+  //grid 스타일
+  const Item = styled(Sheet)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? theme.palette.background.level1 : '#fff',
+    ...theme.typography['body-sm'],
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    borderRadius: 4,
+    color: theme.vars.palette.text.secondary,
+  }));
+
   console.log(userData);
   const centerMenuList = [];
   return isLogin ? (

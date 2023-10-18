@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+import Button from '@mui/joy/Button';
 import './Button.scss';
-const Button = ({children}:any) => {
+const WowButton = ({ color, children }: any) => {
   return (
-   <button className='Button'>{children}</button>
-  )
-}
+    <Button color={color} className="Button">
+      {children}
+    </Button>
+  );
+};
 
-export default Button
+export default WowButton;
